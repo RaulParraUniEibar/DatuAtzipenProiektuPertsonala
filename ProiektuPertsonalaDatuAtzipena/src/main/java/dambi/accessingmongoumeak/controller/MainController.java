@@ -1,6 +1,5 @@
 package dambi.accessingmongoumeak.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +28,15 @@ public class MainController {
 		return estadiosrepository.findById(id);
 	}
 
-
 	@GetMapping(path = "/allEstadios")
 	public @ResponseBody Iterable<Estadios> getAllEstadios() {
 		// Devuelve una lista de todos los estadios
 		return estadiosrepository.findAll();
-	}	
+	}
 
 	@GetMapping(path = "/{pais}")
 	public @ResponseBody Iterable<Estadios> getEstadiosPais(@PathVariable String pais) {
-		// Devuelve una lista de estadios del pais 
+		// Devuelve una lista de estadios del pais
 		return estadiosrepository.findByPais(pais);
 	}
 
@@ -62,24 +60,26 @@ public class MainController {
 
 	@GetMapping(path = "/EntrenadoresEdad/{edad}")
 	public @ResponseBody List<Entrenador> getEntrenadoresEdadMayor(@PathVariable int edad) {
-		// Devuelve una lista de objeto entrenador con sus datos cuya edad sea mayor a la dada
+		// Devuelve una lista de objeto entrenador con sus datos cuya edad sea mayor a
+		// la dada
 		return estadiosrepository.findEntrenadoresEdad(edad);
 	}
 
 	@GetMapping(path = "/Edad/{edad}")
 	public @ResponseBody List<Entrenador> getNombreEdadEntrenador(@PathVariable int edad) {
-		// Devuelve una lista con el nombre y la edad de los entrenadores con mayor edad del dado
+		// Devuelve una lista con el nombre y la edad de los entrenadores con mayor edad
+		// del dado
 		return estadiosrepository.findByEntrenadorEdadMayores(edad);
 	}
 
-	
 	@GetMapping(path = "/entrenadoresExperiencia/{experiencia}")
 	public @ResponseBody List<Entrenador> getEntrenadoresConExperiencia(@PathVariable int experiencia) {
-		// Devuelve una lista de los entrenadores que hayan entrenado a la cantidad de equipos o mas de la expecificada 
+		// Devuelve una lista de los entrenadores que hayan entrenado a la cantidad de
+		// equipos o mas de la expecificada
 		return estadiosrepository.findEntrenadorConEquiposExperiencia(experiencia);
 	}
 
-	@DeleteMapping(path = "deleteStadium/Id{id}")
+	@DeleteMapping(path = "deleteEstadio/Id{id}")
 	public @ResponseBody long deleteEstadio(@PathVariable int id) {
 		try {
 			long zenbat = estadiosrepository.deleteEstadioById(id);
@@ -88,10 +88,10 @@ public class MainController {
 			System.out.println("Errorea " + id + " stadium ezabatzerakoan.");
 		}
 		return id;
-		//elimina el estadio que tenga ese Id
+		// elimina el estadio que tenga ese Id
 	}
 
-	@DeleteMapping(path = "deleteCoachStadium/Id{id}")
+	@DeleteMapping(path = "deleteEntrenadorEstadio/Id{id}")
 	public @ResponseBody long deleteEntrenadorEstadio(@PathVariable int id) {
 		try {
 			long zenbat = estadiosrepository.deleteCoachOfStadium(id);
@@ -100,10 +100,10 @@ public class MainController {
 			System.out.println("Errorea " + id + " stadium-ko entrenatzailea ezabatzerakoan.");
 		}
 		return id;
-		//elimina el entrenador del estadio que tenga ese Id
+		// elimina el entrenador del estadio que tenga ese Id
 	}
 
-	@DeleteMapping(path = "deleteExperienceOfCoach/Id{id}")
+	@DeleteMapping(path = "deleteExperienciaEntrenador/Id{id}")
 	public @ResponseBody long deleteExperienciaEntrenador(@PathVariable int id) {
 		try {
 			long zenbat = estadiosrepository.deleteEntrenadorExperienceOfStadium(id);
@@ -112,6 +112,7 @@ public class MainController {
 			System.out.println("Errorea " + id + " stadium-ko entrenatzailearen experientzia ezabatzerakoan.");
 		}
 		return id;
-		//elimina la experiencia del entrenador que quieras
+		// elimina la experiencia del entrenador que quieras
 	}
+
 }

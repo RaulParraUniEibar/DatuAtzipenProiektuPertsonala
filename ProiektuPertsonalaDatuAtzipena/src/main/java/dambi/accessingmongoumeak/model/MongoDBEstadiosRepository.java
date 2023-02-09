@@ -10,22 +10,14 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.mongodb.ReadConcern;
-import com.mongodb.ReadPreference;
-import com.mongodb.TransactionOptions;
-import com.mongodb.WriteConcern;
+
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 
 @Repository
-public class MongoDBPartidaRepository implements EstadiosRepository {
+public class MongoDBEstadiosRepository implements EstadiosRepository {
 
-    private static final TransactionOptions txnOptions = TransactionOptions.builder()
-            .readPreference(ReadPreference.primary())
-            .readConcern(ReadConcern.MAJORITY)
-            .writeConcern(WriteConcern.MAJORITY)
-            .build();
     @Autowired
     private MongoClient client;
     private MongoCollection<Estadios> estadiosCollection;
@@ -61,7 +53,6 @@ public class MongoDBPartidaRepository implements EstadiosRepository {
                 .into(new ArrayList<>());
     }
 
-
     // ikusi stadiums with less capacity than the given one
     @Override
     public List<Estadios> findByCapacidadMenor(int capacidad) {
@@ -69,7 +60,7 @@ public class MongoDBPartidaRepository implements EstadiosRepository {
                 .into(new ArrayList<>());
     }
 
-    // entrenadores con mayor edad 
+    // entrenadores con mayor edad
     @Override
     public List<Estadios> findByEntrenadorEdadMayor(int edad) {
         return estadiosCollection.find(new Document("entrenadores.edad", new Document("$gt", edad)))
@@ -120,16 +111,15 @@ public class MongoDBPartidaRepository implements EstadiosRepository {
 
     @Override
     public long deleteCoachOfStadium(int id) {
-        return estadiosCollection.updateOne(new Document("_id", id), 
-            new Document("$unset", new Document("entrenadores", ""))).getModifiedCount();
+        return estadiosCollection.updateOne(new Document("_id", id),
+                new Document("$unset", new Document("entrenadores", ""))).getModifiedCount();
 
     }
 
     @Override
     public long deleteEntrenadorExperienceOfStadium(int id) {
-        return estadiosCollection.updateOne(new Document("_id", id), 
-            new Document("$unset", new Document("entrenadores.experiencia", ""))).getModifiedCount();
+        return estadiosCollection.updateOne(new Document("_id", id),
+                new Document("$unset", new Document("entrenadores.experiencia", ""))).getModifiedCount();
     }
-    
-    
+
 }
