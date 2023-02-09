@@ -4,6 +4,7 @@ package dambi.accessingmongoumeak.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,5 +77,41 @@ public class MainController {
 	public @ResponseBody List<Entrenador> getEntrenadoresConExperiencia(@PathVariable int experiencia) {
 		// Devuelve una lista de los entrenadores que hayan entrenado a la cantidad de equipos o mas de la expecificada 
 		return estadiosrepository.findEntrenadorConEquiposExperiencia(experiencia);
+	}
+
+	@DeleteMapping(path = "deleteStadium/Id{id}")
+	public @ResponseBody long deleteEstadio(@PathVariable int id) {
+		try {
+			long zenbat = estadiosrepository.deleteEstadioById(id);
+			return zenbat;
+		} catch (Exception ex) {
+			System.out.println("Errorea " + id + " stadium ezabatzerakoan.");
+		}
+		return id;
+		//elimina el estadio que tenga ese Id
+	}
+
+	@DeleteMapping(path = "deleteCoachStadium/Id{id}")
+	public @ResponseBody long deleteEntrenadorEstadio(@PathVariable int id) {
+		try {
+			long zenbat = estadiosrepository.deleteCoachOfStadium(id);
+			return zenbat;
+		} catch (Exception ex) {
+			System.out.println("Errorea " + id + " stadium-ko entrenatzailea ezabatzerakoan.");
+		}
+		return id;
+		//elimina el entrenador del estadio que tenga ese Id
+	}
+
+	@DeleteMapping(path = "deleteExperienceOfCoach/Id{id}")
+	public @ResponseBody long deleteExperienciaEntrenador(@PathVariable int id) {
+		try {
+			long zenbat = estadiosrepository.deleteEntrenadorExperienceOfStadium(id);
+			return zenbat;
+		} catch (Exception ex) {
+			System.out.println("Errorea " + id + " stadium-ko entrenatzailearen experientzia ezabatzerakoan.");
+		}
+		return id;
+		//elimina la experiencia del entrenador que quieras
 	}
 }

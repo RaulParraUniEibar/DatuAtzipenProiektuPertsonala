@@ -113,4 +113,23 @@ public class MongoDBPartidaRepository implements EstadiosRepository {
         return experienciaentrenador;
     }
 
+    @Override
+    public long deleteEstadioById(int id) {
+        return estadiosCollection.deleteOne(new Document("_id", id)).getDeletedCount();
+    }
+
+    @Override
+    public long deleteCoachOfStadium(int id) {
+        return estadiosCollection.updateOne(new Document("_id", id), 
+            new Document("$unset", new Document("entrenadores", ""))).getModifiedCount();
+
+    }
+
+    @Override
+    public long deleteEntrenadorExperienceOfStadium(int id) {
+        return estadiosCollection.updateOne(new Document("_id", id), 
+            new Document("$unset", new Document("entrenadores.experiencia", ""))).getModifiedCount();
+    }
+    
+    
 }

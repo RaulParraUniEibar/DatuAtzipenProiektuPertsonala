@@ -16,6 +16,8 @@ public interface EstadiosRepository {
     List<Entrenador> findEntrenadoresEdad(int edad);
     List<Entrenador>    findByEntrenadorEdadMayores(int edad);
     List<Entrenador>findEntrenadorConEquiposExperiencia(int entrenados);
-
+    public long deleteEstadioById(int id);
+    public long deleteCoachOfStadium(int id);
+    public long deleteEntrenadorExperienceOfStadium(int id);
     
 }
