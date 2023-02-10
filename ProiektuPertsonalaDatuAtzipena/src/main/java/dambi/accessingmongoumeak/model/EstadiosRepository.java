@@ -21,4 +21,6 @@ public interface EstadiosRepository {
     public long deleteCoachOfStadium(int id);
     public long deleteEntrenadorExperienceOfStadium(int id);
     
+    public Estadios updatecapacidad(Estadios estadio);
+    public Estadios updateEstadio(Estadios estadio);
 }

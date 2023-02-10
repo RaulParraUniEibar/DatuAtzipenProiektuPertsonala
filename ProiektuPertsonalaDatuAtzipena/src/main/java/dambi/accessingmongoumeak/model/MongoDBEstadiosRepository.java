@@ -10,7 +10,6 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
@@ -122,4 +121,20 @@ public class MongoDBEstadiosRepository implements EstadiosRepository {
                 new Document("$unset", new Document("entrenadores.experiencia", ""))).getModifiedCount();
     }
 
+    @Override
+    public Estadios updatecapacidad(Estadios estadio) {
+        estadiosCollection.updateOne(Filters.eq("_id", estadio.getId()),
+                new Document("$set", new Document("capacidad", estadio.getCapacidad())));
+        return estadio;
+    }
+
+    @Override
+    public Estadios updateEstadio(Estadios estadio) {
+        estadiosCollection.updateOne(Filters.eq("_id", estadio.getId()),
+                new Document("$set", new Document("capacidad", estadio.getCapacidad())
+                .append("nombre_del_estadio", estadio.getNombre_del_estadio())
+                .append("ciudad", estadio.getCiudad())));
+        return estadio;
+    }
+    
 }

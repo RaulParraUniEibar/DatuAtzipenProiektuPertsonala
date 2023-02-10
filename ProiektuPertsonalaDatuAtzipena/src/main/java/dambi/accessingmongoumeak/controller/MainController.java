@@ -2,10 +2,13 @@ package dambi.accessingmongoumeak.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -115,4 +118,35 @@ public class MainController {
 		// elimina la experiencia del entrenador que quieras
 	}
 
+	@PutMapping(value = "/editcapacidad")
+	public Estadios editcapacidad(@Valid int id, int capacidad) {
+		try {
+			Estadios estadio = new Estadios();
+			estadio = estadiosrepository.findById(id);
+			estadio.setCapacidad(capacidad);
+
+			estadiosrepository.updatecapacidad(estadio);
+			return estadio;
+		} catch (Exception ex) {
+			return null;
+		}
+
+	}
+
+	@PutMapping(value = "/editEstadio")
+	public Estadios editEstadio(@Valid int id, String nombre_del_estadio, String ciudad, int capacidad) {
+		try {
+			Estadios estadio = new Estadios();
+			estadio = estadiosrepository.findById(id);
+			estadio.setNombre_del_estadio(nombre_del_estadio);
+			estadio.setCiudad(ciudad);
+			estadio.setCapacidad(capacidad);
+
+			estadiosrepository.updateEstadio(estadio);
+			return estadio;
+		} catch (Exception ex) {
+			return null;
+		}
+
+	}
 }
