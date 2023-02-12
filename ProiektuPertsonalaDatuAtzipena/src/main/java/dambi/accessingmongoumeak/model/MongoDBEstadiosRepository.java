@@ -136,5 +136,14 @@ public class MongoDBEstadiosRepository implements EstadiosRepository {
                 .append("ciudad", estadio.getCiudad())));
         return estadio;
     }
-    
+
+    @Override
+    public Estadios updateEntrenadorNombre(Estadios estadio) {
+        estadiosCollection.updateOne(Filters.eq("_id", estadio.getId()),
+                new Document("$set", new Document("entrenadores.nombre", estadio.getEntrenadores().getNombre())
+                ));
+        return estadio;
+    }
+
+
 }

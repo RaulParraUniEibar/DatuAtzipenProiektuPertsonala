@@ -23,4 +23,5 @@ public interface EstadiosRepository {
     
     public Estadios updatecapacidad(Estadios estadio);
     public Estadios updateEstadio(Estadios estadio);
+    public Estadios updateEntrenadorNombre(Estadios estadio);
 }

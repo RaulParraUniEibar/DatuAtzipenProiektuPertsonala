@@ -149,4 +149,17 @@ public class MainController {
 		}
 
 	}
+
+	@PutMapping(value = "/editEntrenadorNombre")
+	public Estadios editEntrenadorNombre(@Valid int id, String nombreEntrenador) {
+		try {
+			Estadios estadio = estadiosrepository.findById(id);
+			estadio.getEntrenadores().setNombre(nombreEntrenador);
+			estadiosrepository.updateEntrenadorNombre(estadio);
+			return estadio;
+		} catch (Exception ex) {
+			return null;
+		}
+	}
+	
 }
