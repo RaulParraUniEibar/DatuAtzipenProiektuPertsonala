@@ -161,7 +161,7 @@ public class MainController {
 			entrenador.setNombre(nombreEntrenador);
 			entrenador.setEdad(edad);
 			entrenador.setExperiencia(Arrays.asList(experiencia));
-
+				
 			estadio.setEntrenadores(entrenador);
 			estadiosrepository.updateEntrenadorNombre(estadio);
 			return estadio;
