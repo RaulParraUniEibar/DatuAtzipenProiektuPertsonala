@@ -1,5 +1,6 @@
 package dambi.accessingmongoumeak.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -164,7 +165,7 @@ public class MainController {
 	}
 
 	@PostMapping(value = "/estadioyEntrenador")
-	public Estadios saveEstadioEntrenador(String nombre_del_estadio, int capacidad, int id, String pais, String ciudad, String equipo, String nombreEntrenador, int edad) {
+	public Estadios saveEstadioEntrenador(String nombre_del_estadio, int capacidad, int id, String pais, String ciudad, String equipo, String nombreEntrenador, int edad, String[] experiencia) {
 		try {
 			Estadios estadio = new Estadios();
 			estadio.setNombre_del_estadio(nombre_del_estadio);
@@ -177,6 +178,7 @@ public class MainController {
 			Entrenador entrenador = new Entrenador();
 			entrenador.setNombre(nombreEntrenador);
 			entrenador.setEdad(edad);
+			entrenador.setExperiencia(Arrays.asList(experiencia));
 
 			estadio.setEntrenadores(entrenador);
 	
