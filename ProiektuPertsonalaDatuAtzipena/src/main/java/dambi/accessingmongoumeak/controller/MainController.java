@@ -163,8 +163,8 @@ public class MainController {
 		}
 	}
 
-	@PostMapping(value = "/estadio")
-	public Estadios saveEstadio(String nombre_del_estadio, int capacidad, int id, String pais, String ciudad, String equipo, String nombreEntrenador, int edad) {
+	@PostMapping(value = "/estadioyEntrenador")
+	public Estadios saveEstadioEntrenador(String nombre_del_estadio, int capacidad, int id, String pais, String ciudad, String equipo, String nombreEntrenador, int edad) {
 		try {
 			Estadios estadio = new Estadios();
 			estadio.setNombre_del_estadio(nombre_del_estadio);
@@ -187,5 +187,24 @@ public class MainController {
 		}
 	}
 	
+	
+	@PostMapping(value = "/estadio")
+	public Estadios saveEstadio(String nombre_del_estadio, int capacidad, int id, String pais, String ciudad, String equipo) {
+		try {
+			Estadios estadio = new Estadios();
+			estadio.setNombre_del_estadio(nombre_del_estadio);
+			estadio.setCapacidad(capacidad);
+			estadio.setId(id);
+			estadio.setPais(pais);
+			estadio.setCiudad(ciudad);
+			estadio.setEquipo(equipo);
+	
+
+			estadiosrepository.save(estadio);
+			return estadio;
+		} catch (Exception ex) {
+			return null;
+		}
+	}
 
 }
