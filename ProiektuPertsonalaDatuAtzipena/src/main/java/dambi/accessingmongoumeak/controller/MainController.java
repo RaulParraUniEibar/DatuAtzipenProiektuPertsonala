@@ -152,11 +152,17 @@ public class MainController {
 
 	}
 
-	@PutMapping(value = "/editEntrenadorNombre")
-	public Estadios editEntrenadorNombre(@Valid int id, String nombreEntrenador) {
+	@PutMapping(value = "/editEntrenador")
+	public Estadios editEntrenadorNombre(@Valid int id, String nombreEntrenador, int edad, String[] experiencia) {
 		try {
 			Estadios estadio = estadiosrepository.findById(id);
-			estadio.getEntrenadores().setNombre(nombreEntrenador);
+
+			Entrenador entrenador = new Entrenador();
+			entrenador.setNombre(nombreEntrenador);
+			entrenador.setEdad(edad);
+			entrenador.setExperiencia(Arrays.asList(experiencia));
+
+			estadio.setEntrenadores(entrenador);
 			estadiosrepository.updateEntrenadorNombre(estadio);
 			return estadio;
 		} catch (Exception ex) {
