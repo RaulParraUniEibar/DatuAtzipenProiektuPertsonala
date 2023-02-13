@@ -27,46 +27,46 @@ public class MongoDBEstadiosRepository implements EstadiosRepository {
                 Estadios.class);
     }
 
-    // ikusi stadium guztiak
+    // buscar todos los estadios
     @Override
     public List<Estadios> findAll() {
         return estadiosCollection.find().into(new ArrayList<>());
     }
 
-    // ikusi partida guztiak Id-a bilatzen
+    // buscar el estadio por la ID
     @Override
     public Estadios findById(int id) {
         return estadiosCollection.find(Filters.eq("_id", id)).first();
     }
 
-    // ikusi stadiums from that country
+    // buscar estadios del pais que nos dan
     @Override
     public List<Estadios> findByPais(String pais) {
         return estadiosCollection.find(Filters.eq("pais", pais)).into(new ArrayList<>());
     }
 
-    // ikusi stadiums with more capacity than the given one
+    // buscar estadios con mayor capacidad que la dada
     @Override
     public List<Estadios> findByCapacidadMayor(int capacidad) {
         return estadiosCollection.find(new Document("capacidad", new Document("$gt", capacidad)))
                 .into(new ArrayList<>());
     }
 
-    // ikusi stadiums with less capacity than the given one
+    // buscar estadios con menor capacidad que la dada
     @Override
     public List<Estadios> findByCapacidadMenor(int capacidad) {
         return estadiosCollection.find(new Document("capacidad", new Document("$lt", capacidad)))
                 .into(new ArrayList<>());
     }
 
-    // entrenadores con mayor edad
+    // buscar entrenadores con mayor edad
     @Override
     public List<Estadios> findByEntrenadorEdadMayor(int edad) {
         return estadiosCollection.find(new Document("entrenadores.edad", new Document("$gt", edad)))
                 .into(new ArrayList<>());
     }
 
-    // entrenadores con mayor edad -Lista Objetos
+    // buscar entrenadores con mayor edad -Lista Objetos
     @Override
     public List<Entrenador> findEntrenadoresEdad(int edad) {
         return estadiosCollection.find(new Document("entrenadores.edad", new Document("$gt", edad)))
@@ -76,7 +76,7 @@ public class MongoDBEstadiosRepository implements EstadiosRepository {
                 .collect(Collectors.toList());
     }
 
-    // entrenadores con mayor edad pero solo con los datos que queramos
+    // buscar entrenadores con mayor edad pero solo con los datos que queramos
     @Override
     public List<Entrenador> findByEntrenadorEdadMayores(int edad) {
         List<Estadios> estadios = estadiosCollection.find(new Document("entrenadores.edad", new Document("$gt", edad)))
@@ -89,7 +89,7 @@ public class MongoDBEstadiosRepository implements EstadiosRepository {
         return entrenadores;
     }
 
-    // entrenadores que tengan igual o mas equipos entrenados que la cantidad dada
+    // buscar entrenadores que tengan igual o mas equipos entrenados que la cantidad dada
     @Override
     public List<Entrenador> findEntrenadorConEquiposExperiencia(int entrenados) {
         List<Estadios> stadiums = estadiosCollection.find().into(new ArrayList<>());
@@ -103,11 +103,13 @@ public class MongoDBEstadiosRepository implements EstadiosRepository {
         return experienciaentrenador;
     }
 
+    // eliminar un estadio por la Id
     @Override
     public long deleteEstadioById(int id) {
         return estadiosCollection.deleteOne(new Document("_id", id)).getDeletedCount();
     }
 
+    // eliminar el entrenador de un estadio sabiendo la Id
     @Override
     public long deleteCoachOfStadium(int id) {
         return estadiosCollection.updateOne(new Document("_id", id),
@@ -115,12 +117,14 @@ public class MongoDBEstadiosRepository implements EstadiosRepository {
 
     }
 
+    // eliminar la experiencia de un entreador sabiendo la Id
     @Override
     public long deleteEntrenadorExperienceOfStadium(int id) {
         return estadiosCollection.updateOne(new Document("_id", id),
                 new Document("$unset", new Document("entrenadores.experiencia", ""))).getModifiedCount();
     }
 
+    // actualizar la capacidad de un estadio
     @Override
     public Estadios updatecapacidad(Estadios estadio) {
         estadiosCollection.updateOne(Filters.eq("_id", estadio.getId()),
@@ -128,6 +132,7 @@ public class MongoDBEstadiosRepository implements EstadiosRepository {
         return estadio;
     }
 
+    // actualizar un estadio, el entrenador no
     @Override
     public Estadios updateEstadio(Estadios estadio) {
         estadiosCollection.updateOne(Filters.eq("_id", estadio.getId()),
@@ -137,8 +142,9 @@ public class MongoDBEstadiosRepository implements EstadiosRepository {
         return estadio;
     }
 
+    // actualizar el entrenador de un equipo/estadio
     @Override
-    public Estadios updateEntrenadorNombre(Estadios estadio) {
+    public Estadios updateEntrenador(Estadios estadio) {
         estadiosCollection.updateOne(Filters.eq("_id", estadio.getId()),
                 new Document("$set", new Document("entrenadores.nombre", estadio.getEntrenadores().getNombre())
                 .append("entrenadores.edad", estadio.getEntrenadores().getEdad())
@@ -146,6 +152,7 @@ public class MongoDBEstadiosRepository implements EstadiosRepository {
         return estadio;
     }
 
+    // guardar un estadio completo
     @Override
     public Estadios save(Estadios estadio) {
         estadiosCollection.insertOne(estadio);

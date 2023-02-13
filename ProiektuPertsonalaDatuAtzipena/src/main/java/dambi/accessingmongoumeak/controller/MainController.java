@@ -120,6 +120,7 @@ public class MainController {
 		// elimina la experiencia del entrenador que quieras
 	}
 
+	// put para editar la capacidad del estadio
 	@PutMapping(value = "/editcapacidad")
 	public Estadios editcapacidad(@Valid int id, int capacidad) {
 		try {
@@ -135,6 +136,7 @@ public class MainController {
 
 	}
 
+	// put para editar solo el estadio sin editar entrenador
 	@PutMapping(value = "/editEstadio")
 	public Estadios editEstadio(@Valid int id, String nombre_del_estadio, String ciudad, int capacidad) {
 		try {
@@ -152,6 +154,7 @@ public class MainController {
 
 	}
 
+	// put para añadir un entrenador a un estadio/equipo
 	@PutMapping(value = "/editEntrenador")
 	public Estadios editEntrenadorNombre(@Valid int id, String nombreEntrenador, int edad, String[] experiencia) {
 		try {
@@ -163,13 +166,14 @@ public class MainController {
 			entrenador.setExperiencia(Arrays.asList(experiencia));
 				
 			estadio.setEntrenadores(entrenador);
-			estadiosrepository.updateEntrenadorNombre(estadio);
+			estadiosrepository.updateEntrenador(estadio);
 			return estadio;
 		} catch (Exception ex) {
 			return null;
 		}
 	}
 
+	// post para crear un estadio con entrenador
 	@PostMapping(value = "/estadioyEntrenador")
 	public Estadios saveEstadioEntrenador(String nombre_del_estadio, int capacidad, int id, String pais, String ciudad, String equipo, String nombreEntrenador, int edad, String[] experiencia) {
 		try {
@@ -195,7 +199,7 @@ public class MainController {
 		}
 	}
 	
-	
+	// post para crear un estadio sin entrenador 
 	@PostMapping(value = "/estadio")
 	public Estadios saveEstadio(String nombre_del_estadio, int capacidad, int id, String pais, String ciudad, String equipo) {
 		try {

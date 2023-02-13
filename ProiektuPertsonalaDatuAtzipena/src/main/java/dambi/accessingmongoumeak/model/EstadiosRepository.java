@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EstadiosRepository {
     
+    //Todos los metodos que usamos en el controller
+
     Estadios findById(int id);
     List<Estadios> findAll();
     List<Estadios> findByPais(String pais);
@@ -23,7 +25,7 @@ public interface EstadiosRepository {
     
     public Estadios updatecapacidad(Estadios estadio);
     public Estadios updateEstadio(Estadios estadio);
-    public Estadios updateEntrenadorNombre(Estadios estadio);
+    public Estadios updateEntrenador(Estadios estadio);
 
     public Estadios save(Estadios estadio);
 }
