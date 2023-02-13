@@ -16,6 +16,4 @@ public class Entrenador {
     int edad;
 
     List<String> experiencia;
-    
-
 }

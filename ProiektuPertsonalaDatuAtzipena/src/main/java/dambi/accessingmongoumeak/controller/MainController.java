@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -161,5 +162,30 @@ public class MainController {
 			return null;
 		}
 	}
+
+	@PostMapping(value = "/estadio")
+	public Estadios saveEstadio(String nombre_del_estadio, int capacidad, int id, String pais, String ciudad, String equipo, String nombreEntrenador, int edad) {
+		try {
+			Estadios estadio = new Estadios();
+			estadio.setNombre_del_estadio(nombre_del_estadio);
+			estadio.setCapacidad(capacidad);
+			estadio.setId(id);
+			estadio.setPais(pais);
+			estadio.setCiudad(ciudad);
+			estadio.setEquipo(equipo);
 	
+			Entrenador entrenador = new Entrenador();
+			entrenador.setNombre(nombreEntrenador);
+			entrenador.setEdad(edad);
+
+			estadio.setEntrenadores(entrenador);
+	
+			estadiosrepository.save(estadio);
+			return estadio;
+		} catch (Exception ex) {
+			return null;
+		}
+	}
+	
+
 }

@@ -132,18 +132,22 @@ public class MongoDBEstadiosRepository implements EstadiosRepository {
     public Estadios updateEstadio(Estadios estadio) {
         estadiosCollection.updateOne(Filters.eq("_id", estadio.getId()),
                 new Document("$set", new Document("capacidad", estadio.getCapacidad())
-                .append("nombre_del_estadio", estadio.getNombre_del_estadio())
-                .append("ciudad", estadio.getCiudad())));
+                        .append("nombre_del_estadio", estadio.getNombre_del_estadio())
+                        .append("ciudad", estadio.getCiudad())));
         return estadio;
     }
 
     @Override
     public Estadios updateEntrenadorNombre(Estadios estadio) {
         estadiosCollection.updateOne(Filters.eq("_id", estadio.getId()),
-                new Document("$set", new Document("entrenadores.nombre", estadio.getEntrenadores().getNombre())
-                ));
+                new Document("$set", new Document("entrenadores.nombre", estadio.getEntrenadores().getNombre())));
         return estadio;
     }
 
+    @Override
+    public Estadios save(Estadios estadio) {
+        estadiosCollection.insertOne(estadio);
+        return estadio;
+    }
 
 }
